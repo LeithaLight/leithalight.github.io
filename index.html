@@ -37,7 +37,7 @@
 					audio: false
 				}
 				navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream);
-		  }});
+			});
 		}
 		// check compatibility
 		if (!("BarcodeDetector" in window)) {
