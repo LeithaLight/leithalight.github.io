@@ -44,7 +44,7 @@
 			  for (const barcode of codes)  {
 				// Log the barcode to the console
 				console.log(barcode);
-				window.alert(barcode);
+				window.alert(barcode.rawValue || barcode.rawData);
 			  }
 			}).catch(err => {
 			  // Log an error if one happens
@@ -52,6 +52,10 @@
 			  window.alert(err);
 			})
 		}
+		
+		// Run detect code function every 100 milliseconds
+		setInterval(detectCode, 100);
+		
 	</script>
   </body>
 </html>
