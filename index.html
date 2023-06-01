@@ -3,10 +3,15 @@
 <head></head>
   <body>
     <video id="video" width="640" height="480" autoplay></video>
+	<label id="stat">false</label>
+	<label id="log"></label>
     <!-- Dont for get to link your JavaScript -->
     <script type="text/javascript">
 		// Get the video element
 		const video = document.querySelector('#video')
+		const stat = document.querySelector('#stat')
+		const slog = document.querySelector('#log')
+		const checkCnt = 0;
 		// Check if device has camera
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 		  // Use video without audio
@@ -22,7 +27,17 @@
 		  }
 		  
 		  // Start video stream
-		  navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream);
+		  navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream)
+			.catch(err => {
+				const constraints = { 
+					video: {
+						width: { ideal: 1800 },
+						height: { ideal: 900 }
+					},
+					audio: false
+				}
+				navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream);
+		  }});
 		}
 		// check compatibility
 		if (!("BarcodeDetector" in window)) {
@@ -31,6 +46,7 @@
 		} else {
 			console.log("Barcode Detector supported!");
 			window.alert("Barcode Detector supported!");
+			stat.innerHTML = "true";
 
 			// create new detector
 			const barcodeDetector = new BarcodeDetector({
@@ -43,6 +59,7 @@
 		const detectCode = () => {
 			// Start detecting codes on to the video element
 			barcodeDetector.detect(video).then(codes => {
+				slog.innerHTML = ("" + ++checkCnt);
 			  // If no codes exit function
 			  if (codes.length === 0) return;
 
