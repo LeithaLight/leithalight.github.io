@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>...</head>
+<head></head>
   <body>
-    <video id="video" width="1280" height="2480" autoplay></video>
+    <video id="video" width="640" height="480" autoplay></video>
     <!-- Dont for get to link your JavaScript -->
     <script type="text/javascript">
 		// Get the video element
@@ -12,6 +12,8 @@
 		  // Use video without audio
 		  const constraints = { 
 			video: {
+                width: { ideal: 1800 },
+                height: { ideal: 900 },
 				facingMode: {
 					exact: "environment"
 				}
@@ -34,6 +36,9 @@
 			const barcodeDetector = new BarcodeDetector({
 				formats: ["code_39", "codabar", "ean_13"],
 			});
+		
+			// Run detect code function every seconds
+			setInterval(detectCode, 1000);
 		}
 		const detectCode = () => {
 			// Start detecting codes on to the video element
@@ -52,9 +57,6 @@
 			  window.alert(err);
 			})
 		}
-		
-		// Run detect code function every 100 milliseconds
-		setInterval(detectCode, 100);
 		
 	</script>
   </body>
