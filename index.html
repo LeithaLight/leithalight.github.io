@@ -4,7 +4,7 @@
   <body>
     <video id="video" width="640" height="480" autoplay></video>
 	<label id="stat">false</label>
-	<label id="log"></label>
+	<label id="log">0</label>
     <!-- Dont for get to link your JavaScript -->
     <script type="text/javascript">
 		// Get the video element
@@ -57,9 +57,9 @@
 			setInterval(detectCode, 1000);
 		}
 		const detectCode = () => {
+				slog.innerHTML = ("" + ++checkCnt);
 			// Start detecting codes on to the video element
 			barcodeDetector.detect(video).then(codes => {
-				slog.innerHTML = ("" + ++checkCnt);
 			  // If no codes exit function
 			  if (codes.length === 0) return;
 
