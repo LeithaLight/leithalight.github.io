@@ -71,7 +71,7 @@
 				ctx.drawImage(video, 0, 0);
 				const input = document.getElementById('input');
 				input.src = canvas.toDataURL();
-				barcodeDetector.detect(video).then(codes => {
+				barcodeDetector.detect(input).then(codes => {
 					sslog.innerHTML = ("" + ++sscnt);
 				  // If no codes exit function
 				  if (codes.length === 0) return;
