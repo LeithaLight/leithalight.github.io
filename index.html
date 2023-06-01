@@ -59,15 +59,15 @@
 		const detectCode = () => {
 				slog.innerHTML = ("" + ++checkCnt);
 			// Start detecting codes on to the video element
-			if (!("BarcodeDetector" in window)) {
-				const canvas = document.getElementById('canvas1');
-				canvas.width = video.videoWidth;
-				canvas.height = video.videoHeight;
-				const ctx = canvas.getContext('2d');
-				ctx.drawImage(video, 0, 0);
-				const input = document.getElementById('input');
-				input.src = canvas.toDataURL();
-				barcodeDetector.detect(input).then(codes => {
+			if ("BarcodeDetector" in window) {
+				//const canvas = document.getElementById('canvas1');
+				//canvas.width = video.videoWidth;
+				//canvas.height = video.videoHeight;
+				//const ctx = canvas.getContext('2d');
+				//ctx.drawImage(video, 0, 0);
+				//const input = document.getElementById('input');
+				//input.src = canvas.toDataURL();
+				barcodeDetector.detect(video).then(codes => {
 				  // If no codes exit function
 				  if (codes.length === 0) return;
 
