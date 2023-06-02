@@ -2,8 +2,8 @@
 <html>
 <head></head>
   <body>
-	<canvas id="canvas1" ></canvas>
-	<img id="input" hidden/>
+	<canvas id="canvas1" hidden></canvas>
+	<img id="input" />
     <video id="video" autoplay style="width:100vw;height:100vh;margin:0;object-fit:cover;"></video>
 	<br/>
 	<label id="stat">false</label>&emsp;
@@ -70,7 +70,16 @@
 				const ctx = canvas.getContext('2d');
 				ctx.drawImage(video, 0, 0);
 				const input = document.getElementById('input');
-				input.src = canvas.toDataURL();
+				input.src = ctx.getImageData(0, 0, 1, 1, { colorSpace: "srgb" });
+				
+				barcodeDetector
+					.detect(input)
+					.then((barcodes) => {
+						barcodes.forEach((barcode) => console.log(barcode.rawValue));
+					})
+					.catch((err) => {
+						console.error(err);
+					});
 				barcodeDetector.detect(input).then(codes => {
 					sslog.innerHTML = ("" + ++sscnt);
 				  // If no codes exit function
