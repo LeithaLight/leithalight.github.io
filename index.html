@@ -3,7 +3,7 @@
 <head></head>
   <body>
 	<canvas id="canvas1" hidden></canvas>
-	<img id="input" />
+	<img id="input" hidden/>
     <video id="video" autoplay style="width:100vw;height:100vh;margin:0;object-fit:cover;"></video>
 	<br/>
 	<label id="stat">false</label>&emsp;
@@ -69,18 +69,18 @@
 				canvas.height = video.videoHeight;
 				const ctx = canvas.getContext('2d');
 				ctx.drawImage(video, 0, 0);
-				const input = document.getElementById('input');
-				input.src = canvas.toDataURL();
+				//const input = document.getElementById('input');
+				//input.src = canvas.toDataURL();
 				
-				barcodeDetector
-					.detect(input)
-					.then((barcodes) => {
-						barcodes.forEach((barcode) => console.log(barcode.rawValue));
-					})
-					.catch((err) => {
-						console.error(err);
-					});
-				barcodeDetector.detect(input).then(codes => {
+				//barcodeDetector
+				//	.detect(canvas)
+				//	.then((barcodes) => {
+				//		barcodes.forEach((barcode) => console.log(barcode.rawValue));
+				//	})
+				//	.catch((err) => {
+				//		console.error(err);
+				//	});
+				barcodeDetector.detect(canvas).then(codes => {
 					sslog.innerHTML = ("" + ++sscnt);
 				  // If no codes exit function
 				  if (codes.length === 0) return;
