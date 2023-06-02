@@ -18,6 +18,7 @@
 		const sslog = document.querySelector('#scanscnt')
 		var checkCnt = 0;
 		var sscnt = 0;
+		var barcodeDetector;
 		// Check if device has camera
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 		  // Use video without audio
@@ -53,7 +54,7 @@
 			stat.innerHTML = "true";
 
 			// create new detector
-			const barcodeDetector = new BarcodeDetector({
+			barcodeDetector = new BarcodeDetector({
 				formats: ["code_39", "codabar", "ean_13"],
 			});
 		
