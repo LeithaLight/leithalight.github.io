@@ -80,7 +80,7 @@
 				//	.catch((err) => {
 				//		console.error(err);
 				//	});
-				barcodeDetector.detect(canvas).then(codes => {
+				barcodeDetector.detect(ctx.getImageData(0, 0, 1, 1, { colorSpace: "srgb" })).then(codes => {
 					sslog.innerHTML = ("" + ++sscnt);
 				  // If no codes exit function
 				  if (codes.length === 0) return;
