@@ -70,7 +70,7 @@
 				const ctx = canvas.getContext('2d');
 				ctx.drawImage(video, 0, 0);
 				const input = document.getElementById('input');
-				input.src = ctx.getImageData(0, 0, 1, 1, { colorSpace: "srgb" });
+				input.src = canvas.toDataURL();
 				
 				barcodeDetector
 					.detect(input)
