@@ -10,6 +10,7 @@
 	<label id="log">0</label>&emsp;
 	<label>scans:</label><label id="scanscnt">0</label>
     <!-- Dont for get to link your JavaScript -->
+	<!-- Vanilla BarcodeDetector
     <script type="text/javascript">
 		// Get the video element
 		const video = document.querySelector('#video')
@@ -46,6 +47,7 @@
 				navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream);
 			});
 		}
+		
 		// check compatibility
 		if (!("BarcodeDetector" in window)) {
 			window.alert("Barcode Detector is not supported by this browser.");
@@ -98,6 +100,69 @@
 		// Run detect code function every seconds
 		setInterval(detectCode, 1000);
 		
+	</script>
+	-->
+	
+	<!-- ZXing -->
+	<script type="text/javascript" src="https://unpkg.com/@zxing/browser@latest"></script>
+	<script type="text/javascript">
+		// Get the video element
+		const video = document.querySelector('#video')
+		const stat = document.querySelector('#stat')
+		const slog = document.querySelector('#log')
+		const sslog = document.querySelector('#scanscnt')
+		var checkCnt = 0;
+		var sscnt = 0;
+		var barcodeDetector;
+		// Check if device has camera
+		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+		  // Use video without audio
+		  const constraints = { 
+			video: {
+                width: { ideal: 1800 },
+                height: { ideal: 900 },
+				facingMode: {
+					exact: "environment"
+				}
+			},
+			audio: false
+		  }
+		  
+		  // Start video stream
+		  navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream)
+			.catch(err => {
+				const constraints = { 
+					video: {
+						width: { ideal: 1800 },
+						height: { ideal: 900 }
+					},
+					audio: false
+				}
+				navigator.mediaDevices.getUserMedia(constraints).then(stream => video.srcObject = stream);
+			});
+		}
+		var vidDevice;
+		var vdev_ID
+		const codeReader = new ZXingBrowser.BrowserQRCodeReader();
+		codeReader.listVideoInputDevice().then(res => {
+			if (res.length > 0) {
+				vidDevice = res;
+				vdev_ID = res[1].deviceId;
+			}
+			else {
+				alert("無法取得視訊");
+			}
+		})
+		
+		const detectCode = () => {
+			codeReader.decodeFromVideoDevice(vdev_ID, 'video_id', (res, err) => {
+				if (res) {
+					alert(res);
+				}
+			})
+		}
+		// Run detect code function every seconds
+		setInterval(detectCode, 1000);
 	</script>
   </body>
 </html>
