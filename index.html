@@ -155,7 +155,7 @@
 		})
 		
 		const detectCode = () => {
-			codeReader.decodeFromVideoDevice(vdev_ID, 'video_id', (res, err) => {
+			codeReader.decodeFromVideoDevice(vdev_ID, 'video', (res, err) => {
 				if (res) {
 					alert(res);
 				}
