@@ -104,7 +104,7 @@
 	-->
 	
 	<!-- ZXing -->
-	<script type="text/javascript" src="https://unpkg.com/@zxing/browser@latest"></script>
+	<script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
 	<script type="text/javascript">
 		// Get the video element
 		const video = document.querySelector('#video')
@@ -142,12 +142,14 @@
 			});
 		}
 		var vidDevice;
-		var vdev_ID
-		const codeReader = new ZXingBrowser.BrowserCodeReader();
-		ZXingBrowser.BrowserQRCodeReader.listVideoInputDevices().then(res => {
-			if (res.length > 0) {
-				vidDevice = res;
-				vdev_ID = (res.length > 1) ? res[1].deviceId : res[0].deviceId;
+		var selectedDeviceId;
+		const codeReader = new ZXing.BrowserMultiFormatReader();
+		codeReader.listVideoInputDevices()
+        .then((videoInputDevices) => {
+			if (videoInputDevices.length > 0) {
+				vidDevice = videoInputDevices;
+				selectedDeviceId = (videoInputDevices.length > 1) ? videoInputDevices[1].deviceId 
+					: videoInputDevices[0].deviceId;
 			}
 			else {
 				alert("無法取得視訊");
@@ -155,23 +157,27 @@
 		})
 		
 		const detectCode = () => {
-			const canvas = document.getElementById('canvas1');
-			canvas.width = video.videoWidth;
-			canvas.height = video.videoHeight;
-			const ctx = canvas.getContext('2d');
-			ctx.drawImage(video, 0, 0);
-			var res = codeReader.decodeFromCanvas(canvas);
-			if (res) {
-				alert(res);
-			}
-			//codeReader.decodeFromVideoDevice(vdev_ID, 'video', (res, err) => {
-			//	if (res) {
-			//		alert(res);
-			//	}
-			//})
+			//const canvas = document.getElementById('canvas1');
+			//canvas.width = video.videoWidth;
+			//canvas.height = video.videoHeight;
+			//const ctx = canvas.getContext('2d');
+			//ctx.drawImage(video, 0, 0);
+			//var res = codeReader.decodeFromCanvas(canvas);
+			//if (res) {
+			//	alert(res);
+			//}
+			codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+				if (res) {
+					alert(res);
+				}
+				if (err && !(err instanceof ZXing.NotFoundException)) {
+					console.error(err)
+					document.getElementById('result').textContent = err
+				}
+			})
 		}
 		// Run detect code function every seconds
-		setInterval(detectCode, 1000);
+		setInterval(detectCode, 3000);
 	</script>
   </body>
 </html>
