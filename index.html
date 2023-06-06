@@ -147,7 +147,7 @@
 		ZXingBrowser.BrowserQRCodeReader.listVideoInputDevices().then(res => {
 			if (res.length > 0) {
 				vidDevice = res;
-				vdev_ID = res[1].deviceId;
+				vdev_ID = (res.length > 1) ? res[1].deviceId : res[0].deviceId;
 			}
 			else {
 				alert("無法取得視訊");
