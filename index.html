@@ -143,7 +143,7 @@
 		}
 		var vidDevice;
 		var vdev_ID
-		const codeReader = new ZXingBrowser.BrowserQRCodeReader();
+		const codeReader = new ZXingBrowser.BrowserCodeReader();
 		ZXingBrowser.BrowserQRCodeReader.listVideoInputDevices().then(res => {
 			if (res.length > 0) {
 				vidDevice = res;
