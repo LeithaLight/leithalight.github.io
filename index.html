@@ -167,12 +167,11 @@
 			//	alert(res);
 			//}
 			codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-				if (res) {
-					alert(res);
+				if (result) {
+					alert(result);
 				}
 				if (err && !(err instanceof ZXing.NotFoundException)) {
 					console.error(err)
-					document.getElementById('result').textContent = err
 				}
 			})
 		}
